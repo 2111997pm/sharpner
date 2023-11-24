@@ -37,6 +37,14 @@
         <li>Item 2</li>
         <li>Item 3</li>
     </ul>
+   <ul id="myList">
+    <li>data</li>
+    <li>data</li>
+    <li>data</li>
+    <li>data</li>
+    <li>data</li>
+  </ul>
+
 
 <script>
      var itemListParent = document.getElementById('itemList').parentNode;
@@ -49,6 +57,35 @@
         var helloBeforeItem1 = document.createElement('span');
         helloBeforeItem1.appendChild(document.createTextNode('Hello'));
         firstListItem.insertBefore(helloBeforeItem1, firstListItem.firstChild);
+</script>
+<script>
+    function createNewListItem() {
+      // Create a new list item
+      var li = document.createElement("li");
+      li.textContent = "New Item";
+
+      // Create a delete button
+      var deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", function() {
+        // Remove the parent li when the delete button is clicked
+        li.remove();
+      });
+
+      // Create an edit button
+      var editButton = document.createElement("button");
+      editButton.textContent = "Edit";
+
+      // Append the delete and edit buttons to the li
+      li.appendChild(deleteButton);
+      li.appendChild(editButton);
+
+      // Append the li to the list
+      document.getElementById("myList").appendChild(li);
+    }
+
+    // Call the function to create a new list item with buttons
+    createNewListItem();
 </script>
 </body>
 
