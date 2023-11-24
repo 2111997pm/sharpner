@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="searchInput" placeholder="Type your search...">
+    <ul id="itemList"></ul>
+    <script>
+        const items = [
+            { name: "Item 1", description: "Description for Item 1" },
+            { name: "Item 2", description: "Description for Item 2" },
+            { name: "Item 3", description: "Description for Item 3" },
+            // Add more items as needed
+        ];
+
+        // Function to update the displayed items based on the search input
+        function updateItemList() {
+            const searchInput = document.getElementById("searchInput");
+            const itemList = document.getElementById("itemList");
+
+            // Clear previous results
+            itemList.innerHTML = "";
+
+            // Get the search string
+            const searchString = searchInput.value.toLowerCase();
+
+            // Filter items based on the search string
+            const filteredItems = items.filter(item =>
+                item.name.toLowerCase().includes(searchString)
+            );
+
+            // Display the filtered items and their descriptions
+            filteredItems.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = item.name;
+
+                // Create a paragraph for the description
+                const descriptionPara = document.createElement("p");
+                descriptionPara.textContent = item.description;
+
+                // Append the description paragraph to the list item
+                li.appendChild(descriptionPara);
+
+                // Append the list item to the item list
+                itemList.appendChild(li);
+            });
+        }
+
+        // Attach the update function to the input's 'input' event
+        document.getElementById("searchInput").addEventListener("input", updateItemList);
+
+        // Initial call to displacley all items
+        updateItemList();
+
+    </script>
+
+</body>
+
+</html>
