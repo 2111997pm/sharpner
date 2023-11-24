@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <h1>The sharpner tech</h1>
     <p>lorem*2'
-        
-    </p><h1 class="heading"></h1>
-    
+
+    </p>
+    <h1 class="heading"></h1>
+    <ul id="items" class="list-group">
+        <li class="list-group-item">Item 1</li>
+        <li class="list-group-item">Item 2</li>
+        <li class="list-group-item">Item 3</li>
+        <li class="list-group-item">Item 4</li>
+    </ul>
+
+
     <script>
         let data = document.getElementsByClassName('heading');
         console.log(data);
+        let ul = document.getElementsByClassName('list-group-item');
+
+        for (let i = 0; i < ul.length; i++) {
+            ul[i].style.backgroundColor = 'red';
+        }
+        console.log(ul);
 
     </script>
 </body>
+
 </html>
