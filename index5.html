@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Add some basic styling for the list items */
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin-left: 10px;
+    }
+  </style>
+  <title>Delete Button Example</title>
+</head>
+<body>
+
+  <h2>Product List</h2>
+
+  <!-- Assuming you have a list with unique identifiers -->
+  <ul id="productList">
+    <li data-id="1">Product A <button onclick="deleteProduct(1)">Delete</button></li>
+    <li data-id="2">Product B <button onclick="deleteProduct(2)">Delete</button></li>
+    <li data-id="3">Product C <button onclick="deleteProduct(3)">Delete</button></li>
+  </ul>
+
+  <script>
+    // Function to delete a product
+    function deleteProduct(productId) {
+      // Remove from local storage
+      removeFromLocalStorage(productId);
+
+      // Remove from the UI
+      removeFromUI(productId);
+    }
+
+    // Function to remove a product from local storage
+    function removeFromLocalStorage(productId) {
+      // Retrieve the existing data from local storage
+      let products = JSON.parse(localStorage.getItem('products')) || [];
+
+      // Remove the product with the specified ID
+      products = products.filter(product => product.id !== productId);
+
+      // Save the updated data back to local storage
+      localStorage.setItem('products', JSON.stringify(products));
+    }
+
+    // Function to remove a product from the UI
+    function removeFromUI(productId) {
+      // Find the list item with the specified data-id attribute
+      const listItem = document.querySelector(`li[data-id="${productId}"]`);
+
+      // Remove the list item from the UI
+      if (listItem) {
+        listItem.remove();
+      }
+    }
+  </script>
+
+</body>
+</html>
