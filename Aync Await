@@ -1,0 +1,22 @@
+// Function that returns a promise to simulate asynchronous API call
+function fetchData() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Data fetched successfully!");
+    }, 1000); // Simulating a delay of 1 second
+  });
+}
+
+// Async function using async/await
+async function fetchDataAsync() {
+  try {
+    console.log("Fetching data...");
+    const result = await fetchData(); // Wait for the promise to resolve
+    console.log(result);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+// Call the async function
+fetchDataAsync();
