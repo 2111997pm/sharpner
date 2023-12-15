@@ -1,14 +1,14 @@
-import React from 'react'
-import Expensis from './components/Expensis'
+import React from "react";
+import Expensis from "./components/Expensis";
 
 const App = () => {
   return (
     <>
-    <h1>The Main App</h1>
-    
-    <Expensis/>
-    </>
-  )
-}
+      <h1>The Main App</h1>
 
-export default App
+      <Expensis />
+    </>
+  );
+};
+
+export default App;
