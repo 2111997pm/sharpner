@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Expense Tracker</title>
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+</style>
+
+<body>
+    <div class="container">
+        <h1>Expense Tracker</h1>
+        <form id="expense-form">
+            <label for="description">Description:</label>
+            <input type="text" id="description" required>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" required>
+
+            <button type="submit">Add Expense</button>
+        </form>
+
+        <ul id="expense-list"></ul>
+    </div>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const expenseForm = document.getElementById('expense-form');
+            const descriptionInput = document.getElementById('description');
+            const amountInput = document.getElementById('amount');
+            const expenseList = document.getElementById('expense-list');
+
+            expenseForm.addEventListener('submit', addExpense);
+
+            function addExpense(event) {
+                event.preventDefault();
+
+                const description = descriptionInput.value;
+                const amount = parseFloat(amountInput.value);
+
+                if (isNaN(amount) || amount <= 0) {
+                    alert('Please enter a valid amount.');
+                    return;
+                }
+
+                const expense = {
+                    id: new Date().getTime(),
+                    description: description,
+                    amount: amount.toFixed(2),
+                };
+
+                saveExpense(expense);
+                updateUI();
+                expenseForm.reset();
+            }
+
+            function saveExpense(expense) {
+                let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+                expenses.push(expense);
+                localStorage.setItem('expenses', JSON.stringify(expenses));
+            }
+
+            function deleteExpense(id) {
+                let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+                expenses = expenses.filter(expense => expense.id !== id);
+                localStorage.setItem('expenses', JSON.stringify(expenses));
+                updateUI();
+            }
+
+            function updateUI() {
+                expenseList.innerHTML = '';
+
+                let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+                expenses.forEach(expense => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                <span>${expense.description}</span>
+                <span>$${expense.amount}</span>
+                <button onclick="deleteExpense(${expense.id})">Delete</button>
+            `;
+                    expenseList.appendChild(listItem);
+                });
+            }
+
+            updateUI();
+        });
+
+    </script>
+</body>
+
+</html>

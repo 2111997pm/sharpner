@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Store</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</head>
+
+<style>
+    td {
+        border: 2px solid grey;
+        text-align: center;
+        padding: 10px;
+    }
+
+    table {
+        width: 50%;
+        margin-top: 20px;
+    }
+</style>
+
+<body>
+    <form id="post">
+        <label for="name">Candy Name</label>
+        <input type="text" id="name" required>
+        <label for="des">Description</label>
+        <input type="text" id="des" required>
+        <label for="price">Price</label>
+        <input type="number" id="price" required>
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" required>
+        <button class="btn btn-info" type="submit">Add Items</button>
+    </form>
+
+    <table id="res" border="2">
+        <tr>
+            <td>Candy Name</td>
+            <td>Description</td>
+            <td>Price</td>
+            <td>Quantity</td>
+            <td colspan="3">Actions</td>
+        </tr>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchCandies();
+            document.getElementById('post').addEventListener('submit', addCandy);
+        });
+
+        async function fetchCandies() {
+            try {
+                const res = await axios.get('https://63dba5e5b8e69785e4875188.mockapi.io/crud');
+                const tableBody = document.getElementById('res');
+                tableBody.innerHTML = ""; // Clear existing rows
+
+                res.data.forEach((element) => {
+                    tableBody.innerHTML += `
+                        <tr>
+                            <td>${element.name}</td>
+                            <td>${element.des}</td>
+                            <td>${element.price}</td>
+                            <td id="quantity-${element.id}">${element.quantity}</td>
+                            <td><button class="btn btn-warning" onclick="buyCandy(${element.id}, 1)">buy1</button></td>
+                            <td><button class="btn btn-warning" onclick="buyCandy(${element.id}, 2)">buy2</button></td>
+                            <td><button class="btn btn-warning" onclick="buyCandy(${element.id}, 3)">buy3</button></td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function addCandy(e) {
+            e.preventDefault();
+            let name = document.getElementById('name').value;
+            let des = document.getElementById('des').value;
+            let price = document.getElementById('price').value;
+            let quantity = document.getElementById('quantity').value;
+
+            try {
+                await axios.post('https://63dba5e5b8e69785e4875188.mockapi.io/crud', {
+                    name,
+                    des,
+                    price,
+                    quantity
+                });
+                fetchCandies();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        
+
+        async function buyCandy(id, quantityToBuy) {
+            try {
+                const response = await axios.get(`https://63dba5e5b8e69785e4875188.mockapi.io/crud/${id}`);
+                const currentQuantity = response.data.quantity;
+
+                if (currentQuantity >= quantityToBuy) {
+                    const newQuantity = currentQuantity - quantityToBuy;
+                    await axios.put(`https://63dba5e5b8e69785e4875188.mockapi.io/crud/${id}`, { quantity: newQuantity });
+                    document.getElementById(`quantity-${id}`).innerText = newQuantity;
+                } else {
+                    alert("Not enough quantity available!");
+                }
+
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+
+</html>
