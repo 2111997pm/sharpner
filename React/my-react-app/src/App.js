@@ -6,6 +6,7 @@ const App = ({ data }) => {
     <>
       <h1>The Main App</h1>
 
+      
       <Expensis data="prahalad" />
     </>
   );
