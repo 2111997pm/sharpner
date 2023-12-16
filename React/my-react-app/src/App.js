@@ -1,12 +1,12 @@
 import React from "react";
 import Expensis from "./components/Expensis";
 
-const App = () => {
+const App = ({ data }) => {
   return (
     <>
       <h1>The Main App</h1>
 
-      <Expensis />
+      <Expensis data="prahalad" />
     </>
   );
 };

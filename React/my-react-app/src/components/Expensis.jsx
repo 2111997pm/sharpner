@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Expensis = () => {
+const Expensis = ({data}) => {
     return (
         <ul>
-            <li>data 1</li>
-            <li>data 2</li>
-            <li>data 3</li>
+            <li>{data}</li>
+            <li>{data}</li>
+            <li>{data}</li>
         </ul>
     )
 }
