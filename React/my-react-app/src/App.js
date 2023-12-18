@@ -4,6 +4,7 @@ import MyForm from "./components/MyForm";
 import { useState } from 'react';
 
 import ConditionalRenderingExample from "./components/ConditonalRendering";
+import AddNewUser from "./components/AddNewUser";
 
 const App = ({ data }) => {
   const [goal, setGoal] = useState('');
@@ -24,6 +25,7 @@ const App = ({ data }) => {
 
   return (
     <>
+    <AddNewUser/>
       <h1>The Main App</h1>
 
       <MyForm />
