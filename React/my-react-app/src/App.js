@@ -1,6 +1,7 @@
 import React from "react";
 import Expensis from "./components/Expensis";
 import MyForm from "./components/MyForm";
+import CountRedcuer from './components/CountReducer'
 import { useState } from 'react';
 
 import ConditionalRenderingExample from "./components/ConditonalRendering";
@@ -26,6 +27,7 @@ const App = ({ data }) => {
 
   return (
     <>
+    <CountRedcuer/>
     <FormValidationExample/>
     <AddNewUser/>
       <h1>The Main App</h1>
