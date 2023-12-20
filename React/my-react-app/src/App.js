@@ -7,6 +7,7 @@ import { useState } from 'react';
 import ConditionalRenderingExample from "./components/ConditonalRendering";
 import AddNewUser from "./components/AddNewUser";
 import FormValidationExample from "./components/FormvalidateExample";
+import Project1 from "./Project1";
 
 const App = ({ data }) => {
   const [goal, setGoal] = useState('');
@@ -27,6 +28,7 @@ const App = ({ data }) => {
 
   return (
     <>
+    <Project1/>
     <CountRedcuer/>
     <FormValidationExample/>
     <AddNewUser/>
